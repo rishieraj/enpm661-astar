@@ -1,4 +1,4 @@
-# GitHub Repository: https://github.com/rishieraj/enpm661-dijkstra.git
+# GitHub Repository: https://github.com/rishieraj/enpm661-astar.git
 
 # importing libraries and dependencies
 import numpy as np
@@ -367,7 +367,7 @@ if __name__ == '__main__':
     start_point, goal_point, step_size = user_input(obs_space)
     # creating opencv video writing objects
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out = cv2.VideoWriter('astar_rishie_raj.mp4', fourcc, 20.0, (1200, 500))
+    out = cv2.VideoWriter('a_star_rishie_uthappa.mp4', fourcc, 20.0, (1200, 500))
 
     # timer object to measure computation time
     timer_start = time.time()
