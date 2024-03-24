@@ -132,7 +132,7 @@ def config_space():
 
             # Clearance
             l1 = i - (520 - clearance - radius - 1)
-            l2 = j - np.tan(np.radians(30)) * i - (30 - clearance - radius - 1)
+            l2 = j - np.tan(np.radians(30)) * i - (30 + clearance + radius + 1)
             l3 = j + np.tan(np.radians(30)) * i - (774 + clearance + radius + 1)
             l4 = i - (780 + clearance + radius + 1)
             l5 = j - np.tan(np.radians(30)) * i + (275 + clearance + radius + 1)
@@ -164,7 +164,7 @@ def move_plus_sixty(current_node, goal_state, step_size, obs_space):
         return None
     
     # updating C2C and C2G
-    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1])) - 20
+    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1]))
     c2c = current_node[1] + 1
     cost =  c2g + c2c
     new_node = [cost, c2c, (x, y, theta)]
@@ -181,7 +181,7 @@ def move_plus_thirty(current_node, goal_state, step_size, obs_space):
         return None
     
     # updating C2C and C2G
-    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1])) - 20
+    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1]))
     c2c = current_node[1] + 1
     cost =  c2g + c2c
     new_node = [cost, c2c, (x, y, theta)]
@@ -198,7 +198,7 @@ def move_straight(current_node, goal_state, step_size, obs_space):
         return None
     
     # updating C2C and C2G
-    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1])) - 20
+    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1]))
     c2c = current_node[1] + 1
     cost =  c2g + c2c
     new_node = [cost, c2c, (x, y, theta)]
@@ -215,7 +215,7 @@ def move_minus_thirty(current_node, goal_state, step_size, obs_space):
         return None
     
     # updating C2C and C2G
-    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1])) - 20
+    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1]))
     c2c = current_node[1] + 1
     cost =  c2g + c2c
     new_node = [cost, c2c, (x, y, theta)]
@@ -232,7 +232,7 @@ def move_minus_sixty(current_node, goal_state, step_size, obs_space):
         return None
     
     # updating C2C and C2G
-    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1])) - 20
+    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1]))
     c2c = current_node[1] + 1
     cost =  c2g + c2c
     new_node = [cost, c2c, (x, y, theta)]
@@ -367,7 +367,7 @@ if __name__ == '__main__':
     start_point, goal_point, step_size = user_input(obs_space)
     # creating opencv video writing objects
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out = cv2.VideoWriter('astar_rishie_raj.mp4', fourcc, 100.0, (1200, 500))
+    out = cv2.VideoWriter('astar_rishie_raj.mp4', fourcc, 20.0, (1200, 500))
 
     # timer object to measure computation time
     timer_start = time.time()
@@ -431,7 +431,7 @@ if __name__ == '__main__':
         cv2.line(canvas, pt1=adjusted_parent_point, pt2=adjusted_child_point, color=(0, 255, 0), thickness=1)
 
         # skipping frames for faster visualization
-        if count % 40 == 0:
+        if count % 10 == 0:
             cv2.imshow('Optimal Path Animation', canvas)
             cv2.waitKey(int(0.001 * 1000))
             out.write(canvas)
