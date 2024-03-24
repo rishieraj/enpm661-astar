@@ -155,85 +155,85 @@ def euclid_distance(pt1, pt2):
 
 # defining Actions    
 def move_plus_sixty(current_node, goal_state, step_size, obs_space):
-    theta = current_node[2][2] + 60
-    x = round(current_node[2][0] + step_size * np.cos(np.radians(theta % 360)))
-    y = round(current_node[2][1] + step_size * np.sin(np.radians(theta % 360)))
+    theta = (current_node[2][2] + 60) % 360
+    x = round(current_node[2][0] + step_size * np.cos(np.radians(theta)))
+    y = round(current_node[2][1] + step_size * np.sin(np.radians(theta)))
 
     # checking validity of action
     if (obs_space[y][x] == 1 or obs_space[y][x] == 2):
         return None
     
     # updating C2C and C2G
-    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1]))
-    c2c = current_node[1] + step_size 
+    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1])) - 20
+    c2c = current_node[1] + 1
     cost =  c2g + c2c
     new_node = [cost, c2c, (x, y, theta)]
 
     return new_node
 
 def move_plus_thirty(current_node, goal_state, step_size, obs_space):
-    theta = current_node[2][2] + 30
-    x = round(current_node[2][0] + step_size * np.cos(np.radians(theta % 360)))
-    y = round(current_node[2][1] + step_size * np.sin(np.radians(theta % 360)))
+    theta = (current_node[2][2] + 30) % 360
+    x = round(current_node[2][0] + step_size * np.cos(np.radians(theta)))
+    y = round(current_node[2][1] + step_size * np.sin(np.radians(theta)))
 
     # checking validity of action
     if (obs_space[y][x] == 1 or obs_space[y][x] == 2):
         return None
     
     # updating C2C and C2G
-    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1]))
-    c2c = current_node[1] + step_size 
+    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1])) - 20
+    c2c = current_node[1] + 1
     cost =  c2g + c2c
     new_node = [cost, c2c, (x, y, theta)]
 
     return new_node
 
 def move_straight(current_node, goal_state, step_size, obs_space):
-    theta = current_node[2][2]
-    x = round(current_node[2][0] + step_size * np.cos(np.radians(theta % 360)))
-    y = round(current_node[2][1] + step_size * np.sin(np.radians(theta % 360)))
+    theta = current_node[2][2] % 360
+    x = round(current_node[2][0] + step_size * np.cos(np.radians(theta)))
+    y = round(current_node[2][1] + step_size * np.sin(np.radians(theta)))
 
     # checking validity of action
     if (obs_space[y][x] == 1 or obs_space[y][x] == 2):
         return None
     
     # updating C2C and C2G
-    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1]))
-    c2c = current_node[1] + step_size 
+    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1])) - 20
+    c2c = current_node[1] + 1
     cost =  c2g + c2c
     new_node = [cost, c2c, (x, y, theta)]
 
     return new_node
 
 def move_minus_thirty(current_node, goal_state, step_size, obs_space):
-    theta = current_node[2][2] - 30
-    x = round(current_node[2][0] + step_size * np.cos(np.radians(theta % 360)))
-    y = round(current_node[2][1] + step_size * np.sin(np.radians(theta % 360)))
+    theta = (current_node[2][2] - 30) % 360
+    x = round(current_node[2][0] + step_size * np.cos(np.radians(theta)))
+    y = round(current_node[2][1] + step_size * np.sin(np.radians(theta)))
 
     # checking validity of action
     if (obs_space[y][x] == 1 or obs_space[y][x] == 2):
         return None
     
     # updating C2C and C2G
-    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1]))
-    c2c = current_node[1] + step_size 
+    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1])) - 20
+    c2c = current_node[1] + 1
     cost =  c2g + c2c
     new_node = [cost, c2c, (x, y, theta)]
 
     return new_node
 
 def move_minus_sixty(current_node, goal_state, step_size, obs_space):
-    theta = current_node[2][2] - 60
-    x = round(current_node[2][0] + step_size * np.cos(np.radians(theta % 360)))
-    y = round(current_node[2][1] + step_size * np.sin(np.radians(theta % 360)))
+    theta = (current_node[2][2] - 60) % 360
+    x = round(current_node[2][0] + step_size * np.cos(np.radians(theta)))
+    y = round(current_node[2][1] + step_size * np.sin(np.radians(theta)))
 
     # checking validity of action
     if (obs_space[y][x] == 1 or obs_space[y][x] == 2):
         return None
     
     # updating C2C and C2G
-    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1]))
-    c2c = current_node[1] + step_size 
+    c2g = euclid_distance((x, y), (goal_state[0], goal_state[1])) - 20
+    c2c = current_node[1] + 1
     cost =  c2g + c2c
     new_node = [cost, c2c, (x, y, theta)]
 
@@ -248,6 +248,8 @@ def astar(start, goal, step_size, obs_space):
     # creating a dict to track parent child relations for backtracking
     parent_map = {}
     parent_map[start] = None
+
+    config_sp = np.zeros((1200, 500, 12))
 
     while not open_list.empty():
         current_node = open_list.get()
@@ -289,9 +291,6 @@ def astar(start, goal, step_size, obs_space):
         for next_node in next_nodes:
             if next_node[2] not in close_list:
                 if next_node[2] not in [x[2] for x in open_list.queue]:
-                    cv2.line(canvas, pt1=(current_node[2][0], 500 - current_node[2][1]), pt2=(next_node[2][0], 500 - next_node[2][1]), color=(0, 255, 0), thickness=1)
-                    cv2.imshow('Optimal Path Animation', canvas)
-                    cv2.waitKey(int(0.001 * 1000))
                     parent_map[next_node[2]] = current_node[2]
                     open_list.put(tuple(next_node))
                 
@@ -373,8 +372,8 @@ if __name__ == '__main__':
     # timer object to measure computation time
     timer_start = time.time()
 
-    # # implementing dijkstra
-    # optimal_path, visit_map = astar(start_point, goal_point, step_size, obs_space)
+    # implementing dijkstra
+    optimal_path, visit_map = astar(start_point, goal_point, step_size, obs_space)
 
     # creating visualization canvas using opencv
     canvas = np.ones((500, 1200, 3), dtype=np.uint8) * 255
@@ -411,24 +410,25 @@ if __name__ == '__main__':
                         [1020, 125], [1020, 375]], dtype=np.int32)
     cv2.fillPoly(canvas, [polygon], (0, 0, 0))
 
-    timer_stop = time.time()
-    c_time = timer_stop - timer_start
-    print("Total Runtime: ", c_time)
-
     # creating a visualization window
     cv2.namedWindow('Optimal Path Animation', cv2.WINDOW_NORMAL)
     cv2.resizeWindow('Optimal Path Animation', 1200, 500)
 
-    # implementing dijkstra
-    optimal_path, visit_map = astar(start_point, goal_point, step_size, obs_space)
+    timer_stop = time.time()
+    c_time = timer_stop - timer_start
+    print("Total Runtime: ", c_time)
 
     count = 0
 
     # displaying node exploration
     for key in visit_map.keys():
-        adjusted_point = (key[0], 500 - key[1])
+        if visit_map[key] == None:
+            continue
 
-        cv2.circle(canvas, adjusted_point, 1, (0, 255, 0), -1)
+        adjusted_parent_point = (visit_map[key][0], 500 - visit_map[key][1])
+        adjusted_child_point = (key[0], 500 - key[1])
+
+        cv2.line(canvas, pt1=adjusted_parent_point, pt2=adjusted_child_point, color=(0, 255, 0), thickness=1)
 
         # skipping frames for faster visualization
         if count % 40 == 0:
