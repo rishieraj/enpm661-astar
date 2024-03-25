@@ -22,7 +22,7 @@ The goal of the project is to implement A-Star Algorithm to find the shortest pa
 ## 4. How to Use:
 Please follow the following steps to implement the code in a local system:
 
- - Download the .py file that was provided as part of the submission or retrieve it from the following GitHub repo: https://github.com/rishieraj/enpm661-dijkstra.git .
+ - Download the .py file that was provided as part of the submission or retrieve it from the following GitHub repo: https://github.com/rishieraj/enpm661-astar.git .
 
  - Once retrieved, the .py file can be executed directly. Upon execution, the user will be prompted to enter the following:
 
