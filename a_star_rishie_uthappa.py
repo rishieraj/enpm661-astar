@@ -1,16 +1,16 @@
 # GitHub Repository: https://github.com/rishieraj/enpm661-astar.git
 
-# importing libraries and dependencies
+############################################ Import the required libraries ##########################################################
 import numpy as np
 from queue import PriorityQueue
 import time
 import cv2
 
-# creating open and closed lists to manage the search
+################################ Define the lists required for computation of the optimal path #######################################
 open_list = PriorityQueue()
 close_list = set()
 
-# defining the Configuration Space
+############################################# Define the Configuration Space ########################################################
 def config_space():
 
     # declaring Configuration Space as an array
@@ -148,12 +148,14 @@ def config_space():
 
     return c_space      
 
+##################################### Define a function to calculate the euclidian distance ######################################
 def euclid_distance(pt1, pt2):
     dist = np.sqrt((pt1[0] - pt2[0])**2 + (pt1[1] - pt2[1])**2)
 
     return dist
 
-# defining Actions    
+######################################### Define the action set for the robot ###################################################
+# moving the robot +60 deg
 def move_plus_sixty(current_node, goal_state, step_size, obs_space):
     theta = (current_node[2][2] + 60) % 360
     x = round(current_node[2][0] + step_size * np.cos(np.radians(theta)))
@@ -171,6 +173,7 @@ def move_plus_sixty(current_node, goal_state, step_size, obs_space):
 
     return new_node
 
+# moving the robot +30 deg
 def move_plus_thirty(current_node, goal_state, step_size, obs_space):
     theta = (current_node[2][2] + 30) % 360
     x = round(current_node[2][0] + step_size * np.cos(np.radians(theta)))
@@ -188,6 +191,7 @@ def move_plus_thirty(current_node, goal_state, step_size, obs_space):
 
     return new_node
 
+# moving the robot straight
 def move_straight(current_node, goal_state, step_size, obs_space):
     theta = current_node[2][2] % 360
     x = round(current_node[2][0] + step_size * np.cos(np.radians(theta)))
@@ -205,6 +209,7 @@ def move_straight(current_node, goal_state, step_size, obs_space):
 
     return new_node
 
+# moving the robot -30 deg
 def move_minus_thirty(current_node, goal_state, step_size, obs_space):
     theta = (current_node[2][2] - 30) % 360
     x = round(current_node[2][0] + step_size * np.cos(np.radians(theta)))
@@ -222,6 +227,7 @@ def move_minus_thirty(current_node, goal_state, step_size, obs_space):
 
     return new_node
 
+# moving the robot -60 deg
 def move_minus_sixty(current_node, goal_state, step_size, obs_space):
     theta = (current_node[2][2] - 60) % 360
     x = round(current_node[2][0] + step_size * np.cos(np.radians(theta)))
@@ -239,7 +245,7 @@ def move_minus_sixty(current_node, goal_state, step_size, obs_space):
 
     return new_node
 
-
+################################################# Implementation of the A star algorithm ################################################
 def astar(start, goal, step_size, obs_space):
     # structure of node: (cost_to_come, (x cordinate, y cordinate))
     start_cost = round(np.sqrt((start[0] - goal[0])**2 + (start[1] - goal[1])**2))
@@ -248,8 +254,6 @@ def astar(start, goal, step_size, obs_space):
     # creating a dict to track parent child relations for backtracking
     parent_map = {}
     parent_map[start] = None
-
-    config_sp = np.zeros((1200, 500, 12))
 
     while not open_list.empty():
         current_node = open_list.get()
@@ -301,7 +305,7 @@ def astar(start, goal, step_size, obs_space):
                             parent_map[next_node[2]] = current_node[2]
                             open_list.put(tuple(next_node))
 
-# performing backtracking based on parent map
+########################################## Backtracking function based on parent map ##################################################
 def back_tracking(parent_map, start, goal):
     path = []
     current_node = goal
@@ -314,7 +318,7 @@ def back_tracking(parent_map, start, goal):
     path.reverse()
     return path
 
-# function for asking for user input of start and goal nodes
+########################################## Function for asking user input of start and goal nodes #######################################
 def user_input(obs_space):
     while True:
         user_input_start = input("Enter the coordinates of the  start node as (X, Y, Orientation): ")
@@ -418,6 +422,7 @@ if __name__ == '__main__':
     c_time = timer_stop - timer_start
     print("Total Runtime: ", c_time)
 
+    ############################################## Display the node exploration #######################################################
     count = 0
 
     # displaying node exploration
