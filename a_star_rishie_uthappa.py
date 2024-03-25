@@ -162,7 +162,7 @@ def move_plus_sixty(current_node, goal_state, step_size, obs_space):
     y = round(current_node[2][1] + step_size * np.sin(np.radians(theta)))
 
     # checking validity of action
-    if (obs_space[y][x] == 1 or obs_space[y][x] == 2):
+    if (obs_space[int(y)][int(x)] == 1 or obs_space[int(y)][int(x)] == 2):
         return None
     
     # updating C2C and C2G
@@ -180,7 +180,7 @@ def move_plus_thirty(current_node, goal_state, step_size, obs_space):
     y = round(current_node[2][1] + step_size * np.sin(np.radians(theta)))
 
     # checking validity of action
-    if (obs_space[y][x] == 1 or obs_space[y][x] == 2):
+    if (obs_space[int(y)][int(x)] == 1 or obs_space[int(y)][int(x)] == 2):
         return None
     
     # updating C2C and C2G
@@ -198,7 +198,7 @@ def move_straight(current_node, goal_state, step_size, obs_space):
     y = round(current_node[2][1] + step_size * np.sin(np.radians(theta)))
 
     # checking validity of action
-    if (obs_space[y][x] == 1 or obs_space[y][x] == 2):
+    if (obs_space[int(y)][int(x)] == 1 or obs_space[int(y)][int(x)] == 2):
         return None
     
     # updating C2C and C2G
@@ -216,7 +216,7 @@ def move_minus_thirty(current_node, goal_state, step_size, obs_space):
     y = round(current_node[2][1] + step_size * np.sin(np.radians(theta)))
 
     # checking validity of action
-    if (obs_space[y][x] == 1 or obs_space[y][x] == 2):
+    if (obs_space[int(y)][int(x)] == 1 or obs_space[int(y)][int(x)] == 2):
         return None
     
     # updating C2C and C2G
@@ -234,7 +234,7 @@ def move_minus_sixty(current_node, goal_state, step_size, obs_space):
     y = round(current_node[2][1] + step_size * np.sin(np.radians(theta)))
 
     # checking validity of action
-    if (obs_space[y][x] == 1 or obs_space[y][x] == 2):
+    if (obs_space[int(y)][int(x)] == 1 or obs_space[int(y)][int(x)] == 2):
         return None
     
     # updating C2C and C2G
@@ -430,8 +430,8 @@ if __name__ == '__main__':
         if visit_map[key] == None:
             continue
 
-        adjusted_parent_point = (visit_map[key][0], 500 - visit_map[key][1])
-        adjusted_child_point = (key[0], 500 - key[1])
+        adjusted_parent_point = (int(visit_map[key][0]), 500 - int(visit_map[key][1]))
+        adjusted_child_point = (int(key[0]), 500 - int(key[1]))
 
         cv2.line(canvas, pt1=adjusted_parent_point, pt2=adjusted_child_point, color=(0, 255, 0), thickness=1)
 
@@ -445,7 +445,7 @@ if __name__ == '__main__':
 
     # displaying optimal path
     for point in optimal_path:
-        adjusted_point = (point[0], 500 - point[1])
+        adjusted_point = (int(point[0]), 500 - int(point[1]))
 
         cv2.circle(canvas, adjusted_point, radius, (0, 0, 255), -1)
         

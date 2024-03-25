@@ -15,7 +15,7 @@ The goal of the project is to implement A-Star Algorithm to find the shortest pa
 
  - `a_star_rishie_uthappa.py` : python script containing the code for the project.
 
- - `a_star_rishie_uthappa.mp4` : video file containing the visualization. The visualization has been shown for start: (50, 400) & goal: (400, 100).
+ - `a_star_rishie_uthappa.mp4` : video file containing the visualization. The visualization has been shown for start=(50, 50, 90), goal=(1150, 450, 0), radius=5, clearance=5, step_size=10.
 
  - `README.md` : markdown file containing instructions and details.
 
